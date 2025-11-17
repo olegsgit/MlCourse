@@ -1,0 +1,15 @@
+*.zip
+*.tar.gz
+notMNIST_large/
+notMNIST_small/
+*.zip
+*.tar.gz
+*.log
+*.tmp
+*.bak
+__pycache__/
+*.pyc
+venv/
+.env/
+.DS_Store
+Thumbs.db
