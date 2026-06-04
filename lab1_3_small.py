@@ -50,8 +50,14 @@ print(f"План разделения: train={len(train_files)}, val={len(val_fi
 # Функция копирования пар (путь, класс) в нужную выборку
 def copy_pairs(pairs, subset):
     copied = 0
+    subset_abs = os.path.abspath(subset)
     for src, cls in pairs:
-        dst = os.path.join(subset, cls, os.path.basename(src))
+        basename = os.path.basename(src)
+        dst = os.path.join(subset_abs, cls, basename)
+        # Защита от path traversal: убеждаемся, что путь остаётся внутри целевой папки
+        if not os.path.abspath(dst).startswith(subset_abs + os.sep):
+            print(f"⚠️ Пропуск подозрительного имени файла: {basename}")
+            continue
         shutil.copy(src, dst)
         copied += 1
         # Лёгкий прогресс-индикатор

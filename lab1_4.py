@@ -4,8 +4,11 @@ import hashlib
 # Функция для подсчёта хэша файла 
 # Если два файла одинаковые, их хэши совпадут
 def file_hash(path):
+    h = hashlib.sha256()
     with open(path, "rb") as f:
-        return hashlib.md5(f.read()).hexdigest()
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 # Функция для сбора хэшей из папки выборки 
 def collect_hashes(root):
