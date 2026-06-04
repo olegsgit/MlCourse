@@ -20,8 +20,9 @@ def load_data(root):
                 arr = np.array(img).flatten()        # превращаем картинку в вектор
                 x.append(arr)
                 y.append(cls)                        # метка = имя папки (A–J)
-            except:
-                pass
+            except (OSError, ValueError) as e:
+                print(f"Пропуск файла {path}: {e}")
+                continue
     return np.array(x), np.array(y)
 
 # Загружаем данные 
